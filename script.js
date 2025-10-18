@@ -109,30 +109,54 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Like functionality
-  const likeIcons = document.querySelectorAll(".fa-heart");
-  likeIcons.forEach((icon) => {
-    icon.addEventListener("click", function () {
-      this.classList.toggle("far");
-      this.classList.toggle("fas");
-      this.classList.toggle("liked");
+const likeIcons = document.querySelectorAll(".fa-heart");
 
-      if (this.classList.contains("liked")) {
-        this.style.color = "red";
-      } else {
-        this.style.color = "";
-      }
+likeIcons.forEach((icon) => {
+  const projectId = icon.dataset.id;
+  const likesCount = icon
+    .closest(".project-actions")
+    .querySelector(".likes-count");
 
-      const likesCount =
-        this.closest(".project-actions").querySelector(".likes-count");
-      let currentLikes = parseInt(likesCount.textContent) || 0;
+  let initialLikes = parseInt(likesCount.textContent) || 0;
 
-      if (this.classList.contains("liked")) {
-        likesCount.textContent = currentLikes + 1 + " likes";
-      } else {
-        likesCount.textContent = currentLikes - 1 + " likes";
-      }
-    });
+  // 🔹 Lire la valeur sauvegardée dans localStorage (ou garder celle du HTML)
+  let currentLikes =
+    parseInt(localStorage.getItem(`likes_${projectId}`)) || initialLikes;
+
+  const isLiked = localStorage.getItem(`liked_${projectId}`) === "true";
+
+  // 🔹 Met à jour l’affichage au chargement
+  likesCount.textContent = currentLikes + " likes";
+
+  if (isLiked) {
+    icon.classList.remove("far");
+    icon.classList.add("fas", "liked");
+    icon.style.color = "red";
+  }
+
+  // 🔹 Quand on clique sur le cœur
+  icon.addEventListener("click", function () {
+    this.classList.toggle("liked");
+
+    if (this.classList.contains("liked")) {
+      currentLikes++;
+      this.classList.remove("far");
+      this.classList.add("fas");
+      this.style.color = "red";
+      localStorage.setItem(`liked_${projectId}`, "true");
+    } else {
+      currentLikes--;
+      this.classList.remove("fas");
+      this.classList.add("far");
+      this.style.color = "";
+      localStorage.setItem(`liked_${projectId}`, "false");
+    }
+
+    // 🔹 Sauvegarder le nombre et l’état
+    localStorage.setItem(`likes_${projectId}`, currentLikes);
+    likesCount.textContent = currentLikes + " likes";
   });
+});
 
   // partie commentaire
      const floatingChatbotBtn = document.querySelector(".floating-chatbot-btn");
@@ -186,5 +210,6 @@ document.addEventListener("DOMContentLoaded", function () {
      }
 
      // resume
+
 
 });
