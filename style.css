@@ -1575,12 +1575,6 @@ social-links {
     left: 100%;
 }
 
-/* Hover effect */
-.social-icon:hover {
-    transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 0 10px var(--main-color);
-}
-
 .social-icon svg {
     display: block;
     width: 22px;
@@ -2591,6 +2585,7 @@ social-links {
         height: 120px;
     }
 }
+
 
 
 
