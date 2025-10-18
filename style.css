@@ -1591,7 +1591,7 @@ social-links {
 
 /* Différenciation par réseau (optionnel) */
 .social-icon.github {
-    background: linear-gradient(135deg, #333, #555);
+    background: rgb(69, 53, 53);
 }
 
 .social-icon.linkedin {
@@ -2585,6 +2585,7 @@ social-links {
         height: 120px;
     }
 }
+
 
 
 
